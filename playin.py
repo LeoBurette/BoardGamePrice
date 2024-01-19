@@ -19,6 +19,9 @@ def search(item):
     soup = BeautifulSoup(html_doc, 'html.parser')
 
     boardgames = soup.find('div', attrs={"class": "container_showhide container_family filterCategory filterFamily", "data-family" : 5})
+    if(boardgames == None):
+        return {}
+    
     boardGamePart = boardgames.find("div", attrs={"class" : "bloc"})
 
     liste = list(boardGamePart.find_all('div', attrs={"class": "list_product_full"}))

@@ -27,7 +27,11 @@ def search(item):
 
     soup = BeautifulSoup(html_doc, 'html.parser')
 
-    liste = list(soup.find(attrs={"class" : "product_list"}).find_all('li', attrs={"class": "ajax_block_product"}))
+    checkSomething = soup.find(attrs={"class" : "product_list"})
+    if(checkSomething == None):
+        return {}
+
+    liste = list(checkSomething.find_all('li', attrs={"class": "ajax_block_product"}))
 
     items_name = list(map(lambda a : decode(a.find(attrs={'class' : "s_title_block"}).find('a')["title"]), liste))
     items_price = list(map(lambda a : a.find(attrs={'class' : "price"}).get_text(), liste))

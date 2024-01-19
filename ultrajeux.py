@@ -15,7 +15,11 @@ def search(item):
 
     soup = BeautifulSoup(html_doc, 'html.parser')
 
-    liste = list(soup.find(attrs={"class" : "search"}).find_all('div', attrs={"class": "contenu_block_produit_all"}))
+    checkSomething = soup.find(attrs={"class" : "search"})
+    if checkSomething == None:
+        return {}
+    
+    liste = list(checkSomething.find_all('div', attrs={"class": "contenu_block_produit_all"}))
 
     items_name = []
     items_price = []
