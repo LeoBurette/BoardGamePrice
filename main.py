@@ -4,9 +4,9 @@ from itertools import groupby
 WEBSITES = [
     {"name" : "Philibert", "agent": philibert}, 
     {"name" : "Ludum", "agent": ludum}, 
-    {"name": "Play In", "agent": playin},
+    {"name": "PlayIn", "agent": playin},
     {"name": "EspritJeu", "agent": espritjeu},
-    {"name": "Ultra Jeux", "agent": ultrajeux}
+    {"name": "UltraJeux", "agent": ultrajeux}
 ]
 
 def search_everywhere(item):
