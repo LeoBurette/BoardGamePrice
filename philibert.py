@@ -1,3 +1,4 @@
+from StoreItem import StoreItem
 import agent
 from bs4 import BeautifulSoup
 
@@ -6,8 +7,8 @@ PHILIBERT_BASE_URL = "https://www.philibertnet.com/fr/"
 def encode(strin):
     return strin.replace(' ', '+')
 
-def decode(strin):
-    return strin.replace(u'\xa0', ' ')
+# def decode(strin):
+#     return strin.replace(u'\xa0', ' ')
 
 def getBestSellers():
     html_doc = agent.getHtml(PHILIBERT_BASE_URL)
@@ -30,10 +31,19 @@ def search(item):
     checkSomething = soup.find(attrs={"class" : "product_list"})
     if(checkSomething == None):
         return {}
+    
+    itemList = []
 
     liste = list(checkSomething.find_all('li', attrs={"class": "ajax_block_product"}))
 
-    items_name = list(map(lambda a : decode(a.find(attrs={'class' : "s_title_block"}).find('a')["title"]), liste))
-    items_price = list(map(lambda a : a.find(attrs={'class' : "price"}).get_text(), liste))
+    for item in liste:
+        product_img_link = item.find('a', attrs={"class", "product_img_link"})
 
-    return {items_name[i]: items_price[i] for i in range(len(items_name))}
+        itemList.append(StoreItem(
+            item.find(attrs={'class' : "s_title_block"}).find('a')["title"],
+            item.find(attrs={'class' : "price"}).get_text(),
+            product_img_link['href'],
+            product_img_link.find('img')['src'])
+        )
+
+    return itemList

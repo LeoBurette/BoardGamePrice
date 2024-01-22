@@ -1,12 +1,12 @@
-import unicodedata
+from StoreItem import StoreItem
 import agent
 from bs4 import BeautifulSoup
 import re, json
 
 PLAYIN_BASE_URL = "https://www.play-in.com/"
 
-def decode(strin):
-    return strin.replace(u'\xa0', ' ')
+# def decode(strin):
+#     return strin.replace(u'\xa0', ' ')
 
 def encode(strin):
     return strin.replace(' ', '+')
@@ -26,12 +26,15 @@ def search(item):
 
     liste = list(boardGamePart.find_all('div', attrs={"class": "list_product_full"}))
 
-    items_name = []
-    items_price = []
+    items_list = []
 
     for item in liste:
-        items_name.append(decode(item.find(attrs={'class' : "name_product"}).get_text()))
-        price = item.find(attrs={'class' : "price_product"}).get_text()
-        items_price.append(decode(price))
+        container_img = item.find('div', attrs={"class" : "container_img_product"})
+        items_list.append(StoreItem(
+            item.find(attrs={'class' : "name_product"}).get_text(),
+            item.find(attrs={'class' : "price_product"}).get_text(),
+            PLAYIN_BASE_URL + container_img.find('a')['href'],
+            PLAYIN_BASE_URL + container_img.find('img')['src']
+        ))
     
-    return {items_name[i]: items_price[i] for i in range(len(items_name))}
+    return items_list

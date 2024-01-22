@@ -1,0 +1,17 @@
+<head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/search.css') }}">
+</head>
+<div class="search-box">
+    <button class="btn-search"><i class="fas fa-search"></i></button>
+    <input type="text" id="myInput" class="input-search" placeholder="Type to Search...">
+</div>
+
+<script>
+    var input = document.getElementById("myInput");
+
+    document.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            document.location.href = document.location.href + "/" + input.value
+        }
+    })
+</script>

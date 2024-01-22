@@ -1,3 +1,4 @@
+from StoreItem import StoreItem
 import agent, unicodedata
 from bs4 import BeautifulSoup
 
@@ -21,12 +22,14 @@ def search(item):
     
     liste = list(checkSomething.find_all('div', attrs={"class": "contenu_block_produit_all"}))
 
-    items_name = []
-    items_price = []
-
+    items_list = []
     for item in liste:
-        items_name.append(decode(item.find("p", {"class": "titre"}).find('a')['title']))
-        price = item.find('span', {"class": "prix"}).get_text()
-        items_price.append(price)
+        img_container = item.find('p', attrs={"class": "image"})
+        items_list.append(StoreItem(
+            decode(item.find("p", attrs={"class": "titre"}).find('a')['title']),
+            item.find('span', attrs={"class": "prix"}).get_text(),
+            ULTRA_JEUX_BASE_URL + img_container.find('a')['href'],
+            img_container.find('img', attrs={"class", "produit_scan"})['src']
+        ))
     
-    return {items_name[i]: items_price[i] for i in range(len(items_name))}
+    return items_list

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<title>Recherche de {{item}}</title>
+
+<body style="background-color: #130f40; color: white;">
+    <h1>Résultat pour le terme "{{item}}"</h1>
+    <h2><a href="{{url_for('searchCenter')}}">Retour à la recherche</a></h2>
+    
+    {% for group in tab %}
+        <h2>{{group[0].name}}</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 10px; grid-auto-rows: minmax(100px, auto);">
+        {% for elem in group %}
+            <div class="elem" style="background-color: #22a6b3; color: black;">
+                <h3>{{elem.name}} - {{elem.origin}}</h3>
+                <div style="width: 100px; border: 10px solide black;" class="img_container">
+                    <img style="display: block; width: 100%; height: auto;" src={{elem.img}}>
+                </div>
+                <p>Prix : {{elem.price}}</p>
+                <a href="{{elem.link}}">Link</a>
+            </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+</body>

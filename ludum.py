@@ -1,16 +1,18 @@
 import agent, unicodedata
+from StoreItem import StoreItem
 from bs4 import BeautifulSoup
 
 LUDUM_BASE_URL = "https://www.ludum.fr/"
 
-def decode(strin):
-    return strin.replace(u'\xa0', ' ')
+# def customDecode(strin: str):
+#     tmp = strin.encode('utf8')
+#     return tmp.replace(u'\xa0', ' ')
 
-def encode(strin):
+def customEncode(strin):
     return strin.replace(' ', '+')
 
 def search(item):
-    url = LUDUM_BASE_URL + "rechercher?s=" + encode(item)
+    url = LUDUM_BASE_URL + "rechercher?s=" + customEncode(item)
     html_doc = agent.getHtml(url)
 
     soup = BeautifulSoup(html_doc, 'html.parser')
@@ -21,14 +23,20 @@ def search(item):
 
     liste = list(checkSomething.find_all('li', attrs={"class": "product_item"}))
 
-    items_name = []
-    items_price = []
+    itemList = []
 
     for item in liste:
-        items_name.append(decode(item.find(attrs={'class' : "product-title"}).find('a').get_text()))
         price = item.find(attrs={'itemprop' : "price"}).get_text()
         if item.find(attrs={'class' : 'product-price-and-shipping'}).find('img') != None:
             price += " IN SALE"
-        items_price.append(decode(price))
+
+        a_thumbnail = item.find('a', attrs={"class", "product-thumbnail"})
+
+        itemList.append(StoreItem(
+            item.find(attrs={'class' : "product-title"}).find('a').get_text(),
+            price,
+            a_thumbnail["href"],
+            a_thumbnail.find('img')['src'])
+        )
     
-    return {items_name[i]: items_price[i] for i in range(len(items_name))}
+    return itemList

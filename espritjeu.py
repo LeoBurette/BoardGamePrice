@@ -1,10 +1,11 @@
 import agent
 from bs4 import BeautifulSoup
+from StoreItem import StoreItem
 
 ESPRITJEU_BASE_URL = "https://www.espritjeu.com/"
 
-def decode(strin):
-    return strin.replace('\n', '')
+# def decode(strin):
+#     return strin.replace('\n', '')
 
 def encode(strin):
     return strin.replace(' ', '+')
@@ -21,12 +22,16 @@ def search(item):
 
     liste = list(checkSomething.find_all('div', attrs={"class": "product_box"}))
 
-    items_name = []
-    items_price = []
+    itemList = []
 
     for item in liste:
-        items_name.append(decode(item.find(attrs={'class' : "bp_designation"}).find('a').get_text()))
         price = item.find(attrs={'class' : "bp_prix"}).find_all('div')[0].get_text()
-        items_price.append(decode(price))
+        
+        itemList.append(StoreItem(
+            item.find(attrs={'class' : "bp_designation"}).find('a').get_text(), 
+            price,
+            item.find('a')['href'],
+            item.find('img')['data-lazy'])
+        )
     
-    return {items_name[i]: items_price[i] for i in range(len(items_name))}
+    return itemList
