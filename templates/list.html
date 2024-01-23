@@ -6,8 +6,8 @@
     <h2><a href="{{url_for('searchCenter')}}">Retour à la recherche</a></h2>
     
     {% for group in tab %}
-        <h2>{{group[0].name}}</h2>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 10px; grid-auto-rows: minmax(100px, auto);">
+        <h2>{{group[0].name}}</h2> <button class="hidebutton" id="hide{{loop.index}}" num={{loop.index}}>Show/Hide</button>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 10px; grid-auto-rows: minmax(100px, auto);" id="list{{loop.index}}">
         {% for elem in group %}
             <div class="elem" style="background-color: #22a6b3; color: black;">
                 <h3>{{elem.name}} - {{elem.origin}}</h3>
@@ -21,3 +21,12 @@
         </div>
     {% endfor %}
 </body>
+
+<script>
+    const hidebutton = document.querySelectorAll('.hidebutton')
+    hidebutton.forEach(element => {
+        element.addEventListener('click', (event) => {
+            document.getElementById('list' + element.getAttribute('num')).style.display  = document.getElementById('list' + element.getAttribute('num')).style.display == 'none' ? 'grid' : 'none'
+        })
+    });
+</script>
