@@ -29,7 +29,8 @@ class WebClientSingleton(metaclass=SingletonMeta):
         options.add_argument('--headless')
         options.add_argument('--log-level=1')
         self.driver = webdriver.Chrome(options=options)
-    
+        # self.driver = webdriver.Remote("http://selenium:4444", options=options)    
+        
     def getDriver(self):
         return self.driver
 
