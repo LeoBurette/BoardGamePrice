@@ -1,4 +1,5 @@
-import philibert, ludum, playin, espritjeu, typer, ultrajeux, ludikboutik, parkage, ludifolie
+from threading import Thread
+import philibert, ludum, playin, espritjeu, typer, ultrajeux, ludikboutik, parkage, ludifolie, agent
 from itertools import groupby, combinations
 from StoreItem import StoreItem
 from collections import Counter
@@ -13,6 +14,16 @@ WEBSITES = [
     {"name": "LudiFolie", "agent": ludifolie},
     {"name": "LudikBoutik", "agent": ludikboutik}
 ]
+
+class SearchThread(Thread):
+    def __init__(self, job, sitename):
+        Thread.__init__(self)
+        self.value = None
+        self.job = job
+        self.sitename = sitename
+
+    def run(self):
+        self.value = self.job()
 
 def search_print_everywhere(item):
     for site in WEBSITES:
@@ -35,12 +46,20 @@ def generateTab(item: str):
         return item
     
     tab = []
+    threadspool = []
     i = 0
     for site in WEBSITES:
         i = i + 1
         print(str(i) + '/' + str(len(WEBSITES)))
-        current = site["agent"].search(item)
-        current = list(map(lambda a : addOrigin(a, site['name']), current))
+
+        currentThread = SearchThread(lambda: site["agent"].search(item), site['name'])
+        threadspool.append(currentThread)
+        currentThread.start()
+
+    for thread in threadspool:
+        thread.join()
+        current = thread.value
+        current = list(map(lambda a : addOrigin(a, thread.sitename), current))
         tab = tab + current
     return tab
 

@@ -33,6 +33,9 @@ class WebClientSingleton(metaclass=SingletonMeta):
         
     def getDriver(self):
         return self.driver
+    
+    def closeDriver(self):
+        self.driver.close()
 
 
 def generateAgent(url):
@@ -53,4 +56,5 @@ def getClientRenderHtml(url):
     sleep(1)
 
     elm = driver.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
+    driver.close()
     return elm
