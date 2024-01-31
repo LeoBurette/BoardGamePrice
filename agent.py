@@ -43,8 +43,13 @@ def generateAgent(url):
     req.headers = HEADER
     return req
 
-def generateWebClient():
-    return WebClientSingleton().getDriver()
+def generateWebClient(): 
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ['enable-logging'])
+    options.add_argument('--headless')
+    options.add_argument('--log-level=1')
+    driver = webdriver.Chrome(options=options)
+    return driver
 
 def getHtml(url):
     return urlopen(generateAgent(url))
