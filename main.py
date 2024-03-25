@@ -1,5 +1,5 @@
 from threading import Thread
-import philibert, ludum, playin, espritjeu, typer, ultrajeux, ludikboutik, parkage, ludifolie, agent
+import philibert, ludum, playin, espritjeu, typer, ultrajeux, ludikboutik, parkage, ludifolie, bcdjeux
 from itertools import groupby, combinations
 from StoreItem import StoreItem
 from collections import Counter
@@ -12,7 +12,9 @@ WEBSITES = [
     {"name": "EspritJeu", "agent": espritjeu},
     {"name": "UltraJeux", "agent": ultrajeux},
     {"name": "LudiFolie", "agent": ludifolie},
-    {"name": "LudikBoutik", "agent": ludikboutik}
+    {"name": "BCDJeux", "agent": bcdjeux}
+    # {"name": "LudikBoutik", "agent": ludikboutik}
+    
 ]
 
 class SearchThread(Thread):

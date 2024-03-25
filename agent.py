@@ -63,3 +63,9 @@ def getClientRenderHtml(url):
     elm = driver.execute_script("return document.getElementsByTagName('html')[0].innerHTML")
     driver.close()
     return elm
+
+def getTextFromBeautifulSoup(item):
+    if(item == None):
+        item == None
+    else:
+        item == item.get_text()

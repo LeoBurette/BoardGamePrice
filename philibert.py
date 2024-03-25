@@ -38,10 +38,11 @@ def search(item):
 
     for item in liste:
         product_img_link = item.find('a', attrs={"class", "product_img_link"})
-
+        price = agent.getTextFromBeautifulSoup(item.find(attrs={'class' : "price"}))
+            
         itemList.append(StoreItem(
             item.find(attrs={'class' : "s_title_block"}).find('a')["title"],
-            item.find(attrs={'class' : "price"}).get_text(),
+            price,
             product_img_link['href'],
             product_img_link.find('img')['src'])
         )
