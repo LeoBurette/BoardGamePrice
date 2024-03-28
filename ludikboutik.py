@@ -26,7 +26,8 @@ def search(item):
             item.find("a", attrs={"class": "nomprod_link"}).get_text(),
             item.find('span', attrs={"class": "impact_price"}).get_text(),
             LUDIKBOUTIK_JEUX_BASE_URL + img_container.find('a')['href'],
-            LUDIKBOUTIK_JEUX_BASE_URL + img_container.find('img')['src']
+            LUDIKBOUTIK_JEUX_BASE_URL + img_container.find('img')['src'],
+            "LudikBoutik"
         ))
     
     return items_list

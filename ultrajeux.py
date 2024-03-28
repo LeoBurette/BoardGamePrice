@@ -29,7 +29,8 @@ def search(item):
             decode(item.find("p", attrs={"class": "titre"}).find('a')['title']),
             item.find('span', attrs={"class": "prix"}).get_text(),
             ULTRA_JEUX_BASE_URL + img_container.find('a')['href'],
-            img_container.find('img', attrs={"class", "produit_scan"})['src']
+            img_container.find('img', attrs={"class", "produit_scan"})['src'],
+            "UltraJeux"
         ))
     
     return items_list

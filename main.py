@@ -1,5 +1,5 @@
 from threading import Thread
-import philibert, ludum, playin, espritjeu, typer, ultrajeux, ludikboutik, parkage, ludifolie, bcdjeux
+import philibert, ludum, playin, espritjeu, typer, ultrajeux, ludikboutik, parkage, ludifolie, bcdjeux, amazon
 from itertools import groupby, combinations
 from StoreItem import StoreItem
 from collections import Counter
@@ -12,20 +12,23 @@ WEBSITES = [
     {"name": "EspritJeu", "agent": espritjeu},
     {"name": "UltraJeux", "agent": ultrajeux},
     {"name": "LudiFolie", "agent": ludifolie},
-    {"name": "BCDJeux", "agent": bcdjeux}
+    {"name": "BCDJeux", "agent": bcdjeux},
+    {"name": "Amazon", "agent": amazon}
     # {"name": "LudikBoutik", "agent": ludikboutik}
     
 ]
 
 class SearchThread(Thread):
-    def __init__(self, job, sitename):
+    def __init__(self, job):
         Thread.__init__(self)
         self.value = None
         self.job = job
-        self.sitename = sitename
 
     def run(self):
         self.value = self.job()
+
+    def getReturn(self):
+        return {"value": self.value, "sitename" : self.sitename}
 
 def search_print_everywhere(item):
     for site in WEBSITES:
@@ -42,11 +45,7 @@ def getRatio(a,b):
     counts = (Counter(a)-Counter(b))+(Counter(b)-Counter(a))
     return 100 - 100 * sum(counts.values()) / total
 
-def generateTab(item: str):
-    def addOrigin(item: StoreItem, site):
-        item.origin = site
-        return item
-    
+def generateTab(item: str):    
     tab = []
     threadspool = []
     i = 0
@@ -54,14 +53,13 @@ def generateTab(item: str):
         i = i + 1
         print(str(i) + '/' + str(len(WEBSITES)))
 
-        currentThread = SearchThread(lambda: site["agent"].search(item), site['name'])
+        currentThread = SearchThread(lambda: site["agent"].search(item))
         threadspool.append(currentThread)
         currentThread.start()
 
     for thread in threadspool:
         thread.join()
         current = thread.value
-        current = list(map(lambda a : addOrigin(a, thread.sitename), current))
         tab = tab + current
     return tab
 

@@ -33,7 +33,8 @@ def search(item):
             decodeName(item.find("p", attrs={"class": "MuiTypography-root MuiTypography-body1 css-1gh66tq"})),
             item.find('span', attrs={"class": "MuiTypography-productPrice"}).get_text(),
             PARKAGE_JEUX_BASE_URL + item.find('a', attrs={"class": "MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone css-19mvujq"})['href'],
-            item.find('img')['src']
+            item.find('img')['src'],
+            "Parkage"
         ))
     
     return items_list

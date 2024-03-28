@@ -26,7 +26,8 @@ def search(item):
             nameWrapper.get_text(),
             item.find('div', attrs={"class": "product-price-and-shipping"}).find(attrs={"class" : "price"}).get_text(),
             nameWrapper.find('a')['href'],
-            item.find('a', attrs={"class": "thumbnail product-thumbnail"}).find('img')['data-full-size-image-url']
+            item.find('a', attrs={"class": "thumbnail product-thumbnail"}).find('img')['data-full-size-image-url'],
+            "Ludifolie"
         ))
     
     return items_list

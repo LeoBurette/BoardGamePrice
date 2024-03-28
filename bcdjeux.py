@@ -32,7 +32,8 @@ def search(item):
             item.find('h2', attrs={'class' : "product-title"}).find('a').get_text(), 
             item.find('span', attrs={"class" : "price"}).get_text(),
             ingclikable['href'],
-            ingclikable.find('img')['data-src'])
+            ingclikable.find('img')['data-src'],
+            "BCDJeux")
         )
     
     return itemList

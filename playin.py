@@ -34,7 +34,8 @@ def search(item):
             item.find(attrs={'class' : "name_product"}).get_text(),
             item.find(attrs={'class' : "price_product"}).get_text(),
             PLAYIN_BASE_URL + container_img.find('a')['href'],
-            PLAYIN_BASE_URL + container_img.find('img')['src']
+            PLAYIN_BASE_URL + container_img.find('img')['src'],
+            "Playin"
         ))
     
     return items_list

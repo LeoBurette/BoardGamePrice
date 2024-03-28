@@ -36,7 +36,8 @@ def search(item):
             item.find(attrs={'class' : "product-title"}).find('a').get_text(),
             price,
             a_thumbnail["href"],
-            a_thumbnail.find('img')['src'])
+            a_thumbnail.find('img')['src'],
+            "Ludum")
         )
     
     return itemList

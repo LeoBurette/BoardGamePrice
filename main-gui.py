@@ -15,7 +15,6 @@ def searchCenter():
     return render_template('search.html')
 
 @app.route('/search/<item>')
-@app.route('/<item>')
 def search(item: str):
     item.replace("%20", ' ')
     tab = generateTab(item)

@@ -44,7 +44,8 @@ def search(item):
             item.find(attrs={'class' : "s_title_block"}).find('a')["title"],
             price,
             product_img_link['href'],
-            product_img_link.find('img')['src'])
+            product_img_link.find('img')['src']),
+            "Philibert"
         )
 
     return itemList

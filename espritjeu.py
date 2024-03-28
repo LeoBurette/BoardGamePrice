@@ -31,7 +31,8 @@ def search(item):
             item.find(attrs={'class' : "bp_designation"}).find('a').get_text(), 
             price,
             item.find('a')['href'],
-            item.find('img')['data-lazy'])
+            item.find('img')['data-lazy'],
+            "EspritJeu")
         )
     
     return itemList
